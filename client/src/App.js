@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Genre from './components/Genre';
 
 function App() {
   const [data, setData] = useState(null);
@@ -14,10 +14,10 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
         <p>
           {!data ? 'Loading...' : data}
         </p>
+        <Genre />
       </header>
     </div>
   );
