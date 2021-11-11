@@ -31,23 +31,33 @@ const getAuth = async () => {
   }
 };
 
-const getRecommendation = async () => {
+const getRecommendation = async (genres, mood) => {
   const token = await getAuth();
-  const artistId = '4Z8W4fKeB5YxbusRsdQVPb';
   const headers = {
     headers: {
-      Authorization: `Bearer ${token}`
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/json',
+      'Content-type': 'application/json'
+    },
+    params: {
+      'seed_genres': `${genres}`,
+      'target_energy': `${mood.target_energy}`,
+      'target_valence': `${mood.target_valence}`,
+      'target_loudness': `${mood.target_loudness}`,
+      'target_acousticness': `${mood.target_acousticness}`,
+      'max_danceability': `${mood.target_danceability}`
     }
   }
   try {
     const response = await axios.get(
-      `https://api.spotify.com/v1/artists/${artistId}/albums/?include_groups=album&limit=10`,
+      'https://api.spotify.com/v1/recommendations?limit=10',
       headers
     );
-    const albums = response.data.items;
+    const albums = response.data;
+    return albums;
   } catch (error) {
     console.log(error);
   }
 }
 
-getRecommendation()
+exports.getRecommendation = getRecommendation;
